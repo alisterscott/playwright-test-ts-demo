@@ -28,6 +28,8 @@ jobs:
 
       - run: npm ci
 
+      - run: npx playwright install
+
       - save_cache:
           paths:
             - node_modules
