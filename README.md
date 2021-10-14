@@ -20,5 +20,5 @@ Build status: [![CircleCI](https://circleci.com/gh/alisterscott/playwright-test-
 
 `npx playwright show-trace ./doco/exampletrace.zip`
 
-![example](/doco/example.png)
+![example](/doco/exampletrace.png)
 
