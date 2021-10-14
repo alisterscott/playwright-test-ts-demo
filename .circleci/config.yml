@@ -6,8 +6,9 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      - image: circleci/node:13.8.0-browsers
+      - image: mcr.microsoft.com/playwright:focal
+    environment:
+      NODE_ENV: development # Needed if playwright is in `devDependencies`
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -27,8 +28,6 @@ jobs:
             - v1-dependencies-
 
       - run: npm ci
-
-      - run: npx playwright install
 
       - save_cache:
           paths:
