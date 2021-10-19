@@ -3,3 +3,4 @@ jest-stare/
 .idea/
 screenshots/
 test-results/
+.DS_Store
