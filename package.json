@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/alisterscott/playwright-test-ts-demo#readme",
   "devDependencies": {
-    "@playwright/test": "^1.15.2",
+    "@playwright/test": "^1.16",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "config": "^3.3.6",
     "eslint": "^7.32.0",
