@@ -4,3 +4,4 @@ jest-stare/
 screenshots/
 test-results/
 .DS_Store
+playwright-report/
