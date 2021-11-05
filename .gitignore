@@ -5,3 +5,4 @@ screenshots/
 test-results/
 .DS_Store
 playwright-report/
+storage/*.json

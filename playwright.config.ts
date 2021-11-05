@@ -1,4 +1,6 @@
+// playwright.config.ts
 module.exports = {
+  globalSetup: require.resolve('./global-setup'),
   reporter: [['list'], ['html']],
   retries: 0,
   use: {

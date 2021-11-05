@@ -7,21 +7,17 @@ test.describe.parallel('Unauthenticated tests', () => {
   })
 })
 
-test.describe.parallel('Unauthenticated tests', () => {
-  test('can view as admin', async ({ page }) => {
-    await page.goto('http://webdriverjsdemo.github.io/auth/')
-    await page.type('#firstname', 'Admin')
-    await page.type('#surname', 'User')
-    await page.click('#ok')
+test.describe.parallel('Admin tests', () => {
+  test.use({ storageState: './storage/admin.json' })
+  test('can view as admin', async ({ page, context }) => {
     await page.goto('http://webdriverjsdemo.github.io/auth/')
     await expect(page.locator('text=Welcome name=AdminUser')).toBeVisible()
   })
+})
 
-  test('can view as standard user', async ({ page }) => {
-    await page.goto('http://webdriverjsdemo.github.io/auth/')
-    await page.type('#firstname', 'Standard')
-    await page.type('#surname', 'Person')
-    await page.click('#ok')
+test.describe.parallel('User tests', () => {
+  test.use({ storageState: './storage/user.json' })
+  test('can view as standard user', async ({ page, context }) => {
     await page.goto('http://webdriverjsdemo.github.io/auth/')
     await expect(page.locator('text=Welcome name=StandardPerson')).toBeVisible()
   })
