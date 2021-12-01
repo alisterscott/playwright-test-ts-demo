@@ -73,4 +73,10 @@ test.describe.parallel('All tests', () => {
     expect(body.id).toBe(4)
     expect(body.title).toBe('Post 4')
   })
+
+  test('can work with material UI select list', async ({ page }) => {
+    await page.goto('https://mui.com/components/selects/')
+    await page.click('#demo-simple-select')
+    await page.click('li[data-value="30"]')
+  })
 })
