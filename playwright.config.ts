@@ -7,6 +7,6 @@ module.exports = {
     headless: true,
     screenshot: 'only-on-failure',
     video: 'retry-with-video',
-    trace: 'on-first-retry'
+    trace: 'on'
   }
 }
