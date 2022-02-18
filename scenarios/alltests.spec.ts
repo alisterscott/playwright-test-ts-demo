@@ -61,7 +61,7 @@ test.describe.parallel('All tests', () => {
 
   test('can POST a REST API and check response using approval style', async ({ request }) => {
     const response = await request.post('https://my-json-server.typicode.com/webdriverjsdemo/webdriverjsdemo.github.io/posts', { data: { title: 'Post 4' } })
-    expect(response.status()).toBe(201)
+    await expect(response, `Response: ${await response.text()}`).toBeOK()
     const body = await response.text()
     expect(body).toMatchSnapshot('post4.txt')
   })
