@@ -80,10 +80,10 @@ test.describe.parallel('All tests', () => {
     await page.click('li[data-value="30"]')
   })
 
-  test('can wait for network responses when clicking', async ({page}) => {
+  test('can wait for network responses when clicking', async ({ page }) => {
     await page.goto('https://webdriverjsdemo.github.io/dynamic/')
     await page.click('#show')
-    await page.waitForResponse('https://my-json-server.typicode.com/webdriverjsdemo/webdriverjsdemo.github.io/posts');
+    await page.waitForResponse('https://my-json-server.typicode.com/webdriverjsdemo/webdriverjsdemo.github.io/posts')
     await expect(page.locator('#content')).toHaveText('[ { "id": 1, "title": "Post 1" }, { "id": 2, "title": "Post 2" }, { "id": 3, "title": "Post 3" } ]')
   })
 })
