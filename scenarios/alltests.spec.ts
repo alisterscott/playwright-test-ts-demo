@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { goToPath, visitHomePage } from '../lib/actions/nav'
+import { clickAndWait, goToPath, visitHomePage } from '../lib/actions/nav'
 
 test.describe.parallel('All tests', () => {
   test('can wait for an element to appear', async ({ page }) => {
@@ -82,8 +82,7 @@ test.describe.parallel('All tests', () => {
 
   test('can wait for network responses when clicking', async ({ page }) => {
     await page.goto('https://webdriverjsdemo.github.io/dynamic/')
-    await page.click('#show')
-    await page.waitForResponse('https://my-json-server.typicode.com/webdriverjsdemo/webdriverjsdemo.github.io/posts')
+    await clickAndWait(page, '#show', 'https://my-json-server.typicode.com/webdriverjsdemo/webdriverjsdemo.github.io/posts')
     await expect(page.locator('#content')).toHaveText('[ { "id": 1, "title": "Post 1" }, { "id": 2, "title": "Post 2" }, { "id": 3, "title": "Post 3" } ]')
   })
 })
