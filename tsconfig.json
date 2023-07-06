@@ -7,6 +7,6 @@
     "outDir": "./tests-out",
     "strictNullChecks": true
   },
-  "include": ["scenarios/**/*", "lib/**/*", "playwright.config.ts", "global-setup.ts"],
+  "include": ["scenarios/**/*", "lib/**/*", "playwright.config.ts", "global-setup.ts", "fixtures.ts"],
   "exclude": ["node_modules"]
 }

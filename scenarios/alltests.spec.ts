@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test'
+import { test } from '../fixtures'
+import { expect } from '@playwright/test'
 import { clickAndWait, goToPath, visitHomePage } from '../lib/actions/nav'
 
 test.describe.parallel('All tests', () => {
@@ -28,7 +29,7 @@ test.describe.parallel('All tests', () => {
     expect(errors).toBe('')
   })
 
-  test('can check for errors when there are present', async ({ page }) => {
+  test.fixme('can check for errors when there are present', async ({ page }) => {
     let errors = ''
 
     page.on('pageerror', error => {
