@@ -29,15 +29,9 @@ test.describe.parallel('All tests', () => {
     expect(errors).toBe('')
   })
 
-  test.fixme('can check for errors when there are present', async ({ page }) => {
-    let errors = ''
-
-    page.on('pageerror', error => {
-      errors = errors + error.message
-    })
-
+  test('can automatically check for errors on every page', async ({ page }) => {
+    test.fail()
     await goToPath(page, 'error')
-    expect(errors).toBe('Purple Monkey Dishwasher Error')
   })
 
   test('can GET a REST API and check response using approval style', async ({ request }) => {
