@@ -40,4 +40,8 @@ jobs:
       # store screenshots
       - store_artifacts:
           path: ~/repo/test-results
+          destination: test-results
+
+      - store_artifacts:
           path: ~/repo/logs/pagetimes.csv
+          destination: page-load-times
