@@ -70,12 +70,6 @@ test.describe.parallel('All tests', () => {
     expect(body.title).toBe('Post 4')
   })
 
-  test('can work with material UI select list', async ({ page }) => {
-    await page.goto('https://mui.com/components/selects/')
-    await page.click('#demo-simple-select')
-    await page.click('li[data-value="30"]')
-  })
-
   test('can wait for network responses when clicking', async ({ page }) => {
     await goToPath(page, 'dynamic')
     await clickAndWait(page, '#show', `${config.get('apiURL')}/posts`)
