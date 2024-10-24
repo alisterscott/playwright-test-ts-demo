@@ -1,0 +1,6 @@
+{
+    "name": "Playwright Testing",
+    "image": "mcr.microsoft.com/playwright:v1.46.0-noble",
+    "forwardPorts": [9323],
+    "postCreateCommand": "npm install"
+  }
