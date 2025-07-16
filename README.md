@@ -2,9 +2,6 @@
 
 A demo project that demonstrates how to use Playwright Test Runner using TypeScript
 
-Build status: [![CircleCI](https://circleci.com/gh/alisterscott/playwright-test-ts-demo/tree/main.svg?style=svg)](https://circleci.com/gh/alisterscott/playwright-test-ts-demo/tree/main)
-
-
 ## Prerequisites
 
 #### Make sure you have node-js installed, available via homebrew
