@@ -13,7 +13,7 @@ test.describe.parallel('Admin tests', () => {
   test.use({ storageState: './storage/admin.json' })
   test('can view as admin', async ({ page, context }) => {
     await goToPath(page, 'auth')
-    await expect(page.locator('text=Welcome name=AdminUser')).toBeVisible()
+    await expect(page.locator('text=Welcome Admin User')).toBeVisible()
   })
 })
 
@@ -21,6 +21,6 @@ test.describe.parallel('User tests', () => {
   test.use({ storageState: './storage/user.json' })
   test('can view as standard user', async ({ page, context }) => {
     await goToPath(page, 'auth')
-    await expect(page.locator('text=Welcome name=StandardPerson')).toBeVisible()
+    await expect(page.locator('text=Welcome Standard Person')).toBeVisible()
   })
 })
