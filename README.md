@@ -1,6 +1,8 @@
 # Playwright Test Demo using TypeScript
 
-A demo project that demonstrates how to use Playwright Test Runner using TypeScript
+A demo project that demonstrates how to use Playwright Test Runner using TypeScript, and runs these on Github Actions.
+
+The target webapp is hosted at [juicedpixels.com/app](https://juicedpixels.com/app)
 
 ## Prerequisites
 
