@@ -1,6 +1,49 @@
-import { test as base, expect } from '@playwright/test'
+import { test as base, expect, Page, Browser } from '@playwright/test'
+import config = require('config')
+import * as fs from 'fs'
 
-export const test = base.extend({
+/**
+ * Save the storage state of a user session.
+ * @param browser The Playwright browser instance.
+ * @param firstName The first name of the user.
+ * @param lastName The last name of the user.
+ * @param saveStoragePath The file path to save the storage state.
+ * @returns The Playwright page instance.
+ */
+async function useOrSaveStorage (
+  browser: Browser,
+  firstName: string,
+  lastName: string,
+  saveStoragePath: string
+): Promise<Page> {
+  const storageExists = fs.existsSync(saveStoragePath)
+
+  if (storageExists === true) {
+    const stats = fs.statSync(saveStoragePath)
+    const ageMs = Date.now() - stats.mtimeMs
+    const hours = ageMs / (1000 * 60 * 60)
+    if (hours <= 48) {
+      // Use existing storage
+      const context = await browser.newContext({ storageState: saveStoragePath })
+      const page = await context.newPage()
+      return page
+    }
+  }
+
+  // Capture new storage
+  const page = await browser.newPage()
+  await page.goto(`${config.get('baseURL')}/auth/`)
+  await page.fill('#firstname', firstName)
+  await page.fill('#surname', lastName)
+  await page.click('#ok')
+  await page.context().storageState({ path: saveStoragePath })
+  return page
+}
+
+export const test = base.extend< {
+  pageAdmin: Page
+  pageUser: Page
+} >({
   page: async ({ page }, use) => {
     const messages: string[] = []
     page.on('console', (msg) => {
@@ -13,7 +56,18 @@ export const test = base.extend({
     })
     await use(page)
     expect(messages).toStrictEqual([])
+  },
+  pageAdmin: async ({ browser }, use) => {
+    const page = await useOrSaveStorage(browser, 'Admin', 'User', 'storage/admin.json')
+    await use(page)
+    await page.close()
+  },
+  pageUser: async ({ browser }, use) => {
+    const page = await useOrSaveStorage(browser, 'Standard', 'Person', 'storage/user.json')
+    await use(page)
+    await page.close()
   }
 })
 
 export default test
+export { expect } from '@playwright/test'

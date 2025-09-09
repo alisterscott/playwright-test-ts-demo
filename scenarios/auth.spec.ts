@@ -1,5 +1,4 @@
-import { test } from '../fixtures'
-import { expect } from '@playwright/test'
+import { expect, test } from '../fixtures'
 import { goToPath } from '../lib/actions/nav'
 
 test.describe('Unauthenticated tests', () => {
@@ -10,17 +9,15 @@ test.describe('Unauthenticated tests', () => {
 })
 
 test.describe('Admin tests', () => {
-  test.use({ storageState: './storage/admin.json' })
-  test('can view as admin', async ({ page, context }) => {
-    await goToPath(page, 'auth')
-    await expect(page.locator('text=Welcome Admin User')).toBeVisible()
+  test('can view as admin', async ({ pageAdmin }) => {
+    await goToPath(pageAdmin, 'auth')
+    await expect(pageAdmin.locator('text=Welcome Admin User')).toBeVisible()
   })
 })
 
 test.describe('User tests', () => {
-  test.use({ storageState: './storage/user.json' })
-  test('can view as standard user', async ({ page, context }) => {
-    await goToPath(page, 'auth')
-    await expect(page.locator('text=Welcome Standard Person')).toBeVisible()
+  test('can view as standard user', async ({ pageUser }) => {
+    await goToPath(pageUser, 'auth')
+    await expect(pageUser.locator('text=Welcome Standard Person')).toBeVisible()
   })
 })
