@@ -3,7 +3,25 @@ import { expect } from '@playwright/test'
 import { clickAndWait, goToPath, visitHomePage } from '../lib/actions/nav'
 import config from 'config'
 
-test.describe.parallel('All tests', () => {
+test.describe('Pages: Dynamic Data', () => {
+  test('As a visitor to the Juiced Pixels web app, I can load data dynamically', {tag: '@dynamic-data'}, async ({ page }) => {
+    await test.step('When I navigate to the dynamic data page', async () => {
+      await goToPath(page, 'dynamic')
+    })
+    await test.step('Then I should see no data initially', async () => {
+      await expect(page.locator('#content')).toHaveText('')
+    })
+    await test.step('When I click the Show Content button', async () => {
+      await page.locator('#show').click()
+      await page.getByRole('button', { name: 'Show Content' }).click()
+    })
+    await test.step('Then I should see the data loaded', async () => {
+      await expect(page.locator('#content')).toContainText('[ { "id": 1, "title": "Post 1" }')
+    })
+  })
+})
+
+test.describe('All tests', () => {
   test('can wait for an element to appear', async ({ page }) => {
     await visitHomePage(page)
     await page.waitForSelector('#elementappearschild', { state: 'visible', timeout: 5000 })
@@ -31,7 +49,7 @@ test.describe.parallel('All tests', () => {
   })
 
   test('can automatically check for errors on every page', async ({ page }) => {
-    test.fail()
+    test.fail() // This test is expected to fail due to navigation to an error page
     await goToPath(page, 'error')
   })
 

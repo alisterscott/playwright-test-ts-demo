@@ -7,6 +7,8 @@ export default defineConfig({
 
   // Run all tests in parallel.
   fullyParallel: true,
+  // Use all workers.
+  workers: '100%',
 
   retries: 0,
 
