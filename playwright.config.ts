@@ -12,7 +12,7 @@ export default defineConfig({
   retries: 0,
 
   // Reporter to use
-  reporter: 'html',
+  reporter: [['list', { printSteps: true }], ['html']],
 
   use: {
     // Collect trace when retrying the failed test.
