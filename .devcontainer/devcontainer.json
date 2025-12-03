@@ -1,0 +1,28 @@
+{
+    "name": "Playwright Testing",
+    "image": "mcr.microsoft.com/playwright:v1.57.0",
+    "forwardPorts": [6080, 9323],
+    "postCreateCommand": "npm install && npx playwright install",
+    "remoteUser": "root",
+    "runArgs": [
+        "--privileged",
+        "--init",
+        "--shm-size=1g",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock"
+    ],
+    "features": {
+        "desktop-lite": {
+            "password": "vscode",
+            "webPort": "6080",
+            "vncPort": "5901"
+        }
+    },
+    "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-playwright.playwright"
+      ]
+    }
+  }
+}
