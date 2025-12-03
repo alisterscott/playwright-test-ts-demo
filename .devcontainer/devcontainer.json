@@ -16,7 +16,8 @@
             "password": "vscode",
             "webPort": "6080",
             "vncPort": "5901"
-        }
+        },
+        "git-lfs": {}
     },
     "customizations": {
     "vscode": {
