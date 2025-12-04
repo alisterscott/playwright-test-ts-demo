@@ -54,6 +54,13 @@ export const test = base.extend< {
     page.on('pageerror', (error) => {
       messages.push(`[${error.name}] ${error.message}`)
     })
+    page.once('load', async () => {
+      const url = page.url();
+      // run javascript to put url in top of page
+      await page.evaluate((url) => {
+        document.body.insertAdjacentHTML('afterbegin', `<div style="position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:9999;padding:10px 16px;background:white;border:1px solid #ccc;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15);font-family:sans-serif;font-size:14px;text-align:center;">${url}</div>`);
+      }, url)
+    })
     await use(page)
     expect(messages).toStrictEqual([])
   },
