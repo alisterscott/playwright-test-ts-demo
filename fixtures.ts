@@ -1,4 +1,4 @@
-import { test as base, expect, Page, Browser } from '@playwright/test'
+import { test as base, expect, Page, Browser, BrowserContext } from '@playwright/test'
 import config = require('config')
 import * as fs from 'fs'
 
@@ -15,7 +15,7 @@ async function useOrSaveStorage (
   firstName: string,
   lastName: string,
   saveStoragePath: string
-): Promise<Page> {
+): Promise<{ context: BrowserContext, page: Page }> {
   const storageExists = fs.existsSync(saveStoragePath)
 
   if (storageExists === true) {
@@ -26,24 +26,35 @@ async function useOrSaveStorage (
       // Use existing storage
       const context = await browser.newContext({ storageState: saveStoragePath })
       const page = await context.newPage()
-      return page
+      return { context, page }
     }
   }
 
   // Capture new storage
-  const page = await browser.newPage()
+  const context = await browser.newContext()
+  const page = await context.newPage()
   await page.goto(`${config.get('baseURL')}/auth/`)
   await page.fill('#firstname', firstName)
   await page.fill('#surname', lastName)
   await page.click('#ok')
-  await page.context().storageState({ path: saveStoragePath })
-  return page
+  await context.storageState({ path: saveStoragePath })
+  return { context, page }
 }
 
-export const test = base.extend< {
+export const test = base.extend<{}, {
   pageAdmin: Page
   pageUser: Page
-} >({
+}>({
+  pageAdmin: [async ({ browser }, use, workerInfo) => {
+    const { context, page } = await useOrSaveStorage(browser, 'Admin', 'User', `storage/admin${workerInfo.workerIndex}.json`)
+    await use(page)
+    await context.close()
+  }, { scope: 'worker' }],
+  pageUser: [async ({ browser }, use, workerInfo) => {
+    const { context, page } = await useOrSaveStorage(browser, 'Standard', 'Person', `storage/user${workerInfo.workerIndex}.json`)
+    await use(page)
+    await context.close()
+  }, { scope: 'worker' }],
   page: async ({ page }, use) => {
     const messages: string[] = []
     page.on('console', (msg) => {
@@ -64,16 +75,6 @@ export const test = base.extend< {
     await use(page)
     expect(messages).toStrictEqual([])
   },
-  pageAdmin: async ({ browser }, use) => {
-    const page = await useOrSaveStorage(browser, 'Admin', 'User', 'storage/admin.json')
-    await use(page)
-    await page.close()
-  },
-  pageUser: async ({ browser }, use) => {
-    const page = await useOrSaveStorage(browser, 'Standard', 'Person', 'storage/user.json')
-    await use(page)
-    await page.close()
-  }
 })
 
 export default test
